@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵喵文字替換器</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #ff6699;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e55a88;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>喵喵文字替換器</h1>
+
+        <label for="inputText">輸入原始文字</label>
+        <textarea id="inputText" rows="6"></textarea>
+
+        <label for="targetText">要替換的字符</label>
+        <input type="text" id="targetText">
+
+        <label for="replaceText">替換成什麼</label>
+        <input type="text" id="replaceText">
+
+        <button onclick="replaceText()">執行替換</button>
+        <button onclick="copyResult()">複製結果</button>
+
+        <label for="outputText">結果</label>
+        <textarea id="outputText" rows="6" readonly></textarea>
+    </div>
+
+    <script>
+        function replaceText() {
+            const input = document.getElementById("inputText").value;
+            const target = document.getElementById("targetText").value;
+            const replacement = document.getElementById("replaceText").value;
+
+            const result = input.split(target).join(replacement);
+            document.getElementById("outputText").value = result;
+        }
+
+        function copyResult() {
+            const resultText = document.getElementById("outputText");
+            resultText.select();
+            document.execCommand("copy");
+            alert("複製成功！");
+        }
+    </script>
+</body>
+</html>

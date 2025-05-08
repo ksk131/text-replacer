@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵喵文字替換器 Plus</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6699;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .pair {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .pair input {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #ff6699;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e55a88;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .pair {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>喵喵文字替換器 Plus</h1>
+
+        <label for="inputText">輸入原始文字</label>
+        <textarea id="inputText" rows="6"></textarea>
+
+        <div id="replaceContainer">
+            <label>替換規則</label>
+            <div class="pair">
+                <input type="text" placeholder="要替換的文字">
+                <input type="text" placeholder="替換成什麼">
+            </div>
+        </div>
+
+        <button onclick="addReplaceField()">＋新增一組替換規則</button>
+        <button onclick="replaceText()">執行替換</button>
+        <button onclick="copyResult()">複製結果</button>
+        <button onclick="clearAll()">一鍵清除</button>
+
+        <label for="outputText">結果</label>
+        <textarea id="outputText" rows="6" readonly></textarea>
+    </div>
+
+    <script>
+        function addReplaceField() {
+            const container = document.getElementById("replaceContainer");
+            const div = document.createElement("div");
+            div.className = "pair";
+            div.innerHTML = '<input type="text" placeholder="要替換的文字"><input type="text" placeholder="替換成什麼">';
+            container.appendChild(div);
+        }
+
+        function replaceText() {
+            let text = document.getElementById("inputText").value;
+            const pairs = document.querySelectorAll("#replaceContainer .pair");
+            pairs.forEach(pair => {
+                const inputs = pair.querySelectorAll("input");
+                const target = inputs[0].value;
+                const replacement = inputs[1].value;
+                if (target !== "") {
+                    text = text.split(target).join(replacement);
+                }
+            });
+            document.getElementById("outputText").value = text;
+        }
+
+        function copyResult() {
+            const resultText = document.getElementById("outputText");
+            resultText.select();
+            document.execCommand("copy");
+            alert("複製成功！");
+        }
+
+        function clearAll() {
+            document.getElementById("inputText").value = "";
+            document.getElementById("outputText").value = "";
+            const container = document.getElementById("replaceContainer");
+            container.innerHTML = '<label>替換規則</label><div class="pair"><input type="text" placeholder="要替換的文字"><input type="text" placeholder="替換成什麼"></div>';
+        }
+    </script>
+</body>
+</html>
